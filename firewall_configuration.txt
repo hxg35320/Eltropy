@@ -1,0 +1,63 @@
+yum install update 
+yum install firewalld
+
+ sudo firewall-cmd --state
+running
+
+
+ systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2020-10-14 03:42:05 UTC; 21min ago
+     Docs: man:firewalld(1)
+ Main PID: 2686 (firewalld)
+   CGroup: /system.slice/firewalld.service
+           └─2686 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+
+Oct 14 03:42:05 ip-172-31-20-111.us-east-2.compute.internal systemd[1]: Start...
+Oct 14 03:42:05 ip-172-31-20-111.us-east-2.compute.internal systemd[1]: Start...
+Hint: Some lines were ellipsized, use -l to show in full.
+
+firewall-cmd --get-active-zones
+public
+  interfaces: eth0
+
+
+
+
+firewall-cmd --get-services
+RH-Satellite-6 amanda-client amanda-k5-client bacula bacula-client bitcoin 
+bitcoin-rpc bitcoin-testnet bitcoin-testnet-rpc ceph ceph-mon cfengine 
+condor-collector ctdb dhcp dhcpv6 dhcpv6-client dns docker-registry
+ dropbox-lansync elasticsearch freeipa-ldap freeipa-ldaps freeipa-replication 
+freeipa-trust ftp ganglia-client ganglia-master high-availability http https 
+imap imaps ipp ipp-client ipsec iscsi-target kadmin kerberos kibana klogin 
+kpasswd kshell ldap ldaps libvirt libvirt-tls managesieve mdns mosh mountd 
+ms-wbt mssql mysql nfs nrpe ntp openvpn ovirt-imageio ovirt-storageconsole 
+ovirt-vmconsole pmcd pmproxy pmwebapi pmwebapis pop3 pop3s postgresql privoxy
+ proxy-dhcp ptp pulseaudio puppetmaster quassel radius rpc-bind rsh rsyncd 
+samba samba-client sane sip sips smtp smtp-submission smtps snmp snmptrap 
+spideroak-lansync squid ssh synergy syslog syslog-tls telnet tftp tftp-client tinc tor-socks transmission-client vdsm vnc-server 
+wbem-https xmpp-bosh xmpp-client xmpp-local xmpp-server
+
+
+
+ sudo firewall-cmd --zone=public --add-service=http
+
+
+
+
+ sudo firewall-cmd --zone=home --list-all
+home
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: ssh mdns samba-client dhcpv6-client
+  ports:
+  protocols:
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
